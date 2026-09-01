@@ -82,8 +82,71 @@ body {
   border: none;
   border-radius: 5px;
 }
+.jump-button,
+.rotate-device {
+  display: none;
+}
 @media (max-width: 840px) {
   .game {
     width: 95%;
+  }
+}
+
+/* Touch controls and landscape layout for phones and tablets. */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .game {
+    width: min(95vw, 800px);
+    margin: 12px auto;
+  }
+
+  .jump-button {
+    display: block;
+    width: min(180px, 35vw);
+    margin: 0 auto 12px;
+    padding: 14px 20px;
+    color: #fff;
+    background: #e53935;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 0 #8e1d1a;
+    font: bold 22px monospace;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .jump-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #8e1d1a;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
+  .game {
+    height: min(400px, calc(100vh - 96px));
+  }
+}
+
+/* A phone in portrait does not leave enough horizontal room for the game. */
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+  .rotate-device {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: #fff;
+    background: #222;
+    font-size: 24px;
+    font-weight: bold;
   }
 }

@@ -1,7 +1,8 @@
 let mario = document.querySelector(".mario");
 let obstacle = document.querySelector(".obstacle");
 let gameOverbox = document.querySelector(".game-over");
-let button = document.querySelector("button");
+let button = document.querySelector(".restart-button");
+let jumpButton = document.querySelector(".jump-button");
 let scoreText = document.querySelector(".score");
 let highScoreText = document.querySelector(".high-score");
 let highScore = Number(localStorage.getItem("marioHighScore")) || 0;
@@ -72,6 +73,18 @@ function jump() {
   isJumping = true;
   marioVelocityY = jumpStrength;
 }
+
+// Mobile jump control. Prevent the touch from also triggering browser gestures.
+jumpButton.addEventListener(
+  "touchstart",
+  (event) => {
+    event.preventDefault();
+    if (gamerunning) {
+      jump();
+    }
+  },
+  { passive: false }
+);
 
 //obs
 
