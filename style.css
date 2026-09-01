@@ -13,14 +13,19 @@ body {
   text-align: center;
 }
 
+.game-wrapper {
+  width: 800px;
+  margin: 30px auto;
+  transition: width 0.15s ease, height 0.15s ease;
+}
 .game {
   width: 800px;
   height: 400px;
   background-color: skyblue;
-  margin: 50px auto;
   position: relative;
   overflow: hidden;
   border-bottom: 50px solid green;
+  transform-origin: top left;
 }
 .mario {
   width: 50px;
@@ -82,17 +87,14 @@ body {
   border: none;
   border-radius: 5px;
 }
-.jump-button,
-.rotate-device {
+.jump-button {
   display: none;
 }
-@media (max-width: 840px) {
-  .game {
-    width: 95%;
-  }
-}
 
-/* Touch controls and landscape layout for phones and tablets. */
+/* Touch controls for phones and tablets. The .game itself keeps its native
+   800x400 layout always — JS scales it visually with a CSS transform so the
+   in-game pixel math (mario position, obstacle position, collisions) never
+   has to know about the screen size. */
 @media (hover: none) and (pointer: coarse) {
   body {
     min-height: 100vh;
@@ -101,14 +103,9 @@ body {
     justify-content: center;
   }
 
-  .game {
-    width: min(95vw, 800px);
-    margin: 12px auto;
-  }
-
   .jump-button {
     display: block;
-    width: min(180px, 35vw);
+    width: min(180px, 40vw);
     margin: 0 auto 12px;
     padding: 14px 20px;
     color: #fff;
@@ -125,28 +122,5 @@ body {
   .jump-button:active {
     transform: translateY(3px);
     box-shadow: 0 1px 0 #8e1d1a;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
-  .game {
-    height: min(400px, calc(100vh - 96px));
-  }
-}
-
-/* A phone in portrait does not leave enough horizontal room for the game. */
-@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
-  .rotate-device {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    color: #fff;
-    background: #222;
-    font-size: 24px;
-    font-weight: bold;
   }
 }

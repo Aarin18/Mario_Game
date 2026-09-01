@@ -1,3 +1,29 @@
+// Fit the game to the screen on phones/tablets. The game's internal
+// coordinate system always stays 800x400 (that's what jump heights,
+// obstacle speed, marioX limits, etc. are all tuned for) — we just scale
+// the whole box visually with CSS transform, so nothing about the actual
+// game logic below has to change. getBoundingClientRect() (used for
+// collision) already accounts for CSS transforms, so hit detection stays
+// accurate at any size.
+const gameWrapper = document.querySelector(".game-wrapper");
+const gameEl = document.querySelector(".game");
+const GAME_WIDTH = 800;
+const GAME_HEIGHT = 400;
+
+function fitGameToScreen() {
+  const horizontalPadding = 16;
+  const availableWidth = window.innerWidth - horizontalPadding;
+  const scale = Math.min(1, availableWidth / GAME_WIDTH);
+
+  gameEl.style.transform = `scale(${scale})`;
+  gameWrapper.style.width = GAME_WIDTH * scale + "px";
+  gameWrapper.style.height = GAME_HEIGHT * scale + "px";
+}
+
+fitGameToScreen();
+window.addEventListener("resize", fitGameToScreen);
+window.addEventListener("orientationchange", fitGameToScreen);
+
 let mario = document.querySelector(".mario");
 let obstacle = document.querySelector(".obstacle");
 let gameOverbox = document.querySelector(".game-over");
@@ -83,7 +109,7 @@ jumpButton.addEventListener(
       jump();
     }
   },
-  { passive: false }
+  { passive: false },
 );
 
 //obs
